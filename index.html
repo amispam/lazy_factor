@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <title>Page Title</title>
+        
+    </head>
+    <body style="background:rgba(0,0,0,0.8); color:white;">
+        <center>
+        <h2>Quick Fraction</h2><br /><hr><code>Dedicated to lazy souls</code>
+        <br />
+        <input type="text" style="padding:3vw; border-radius:2vw; background:transparent; border:solid white; outline:none; overflow:auto; color:white;" placeholder="Input a positive integer here..." class="inpt" id="inpt" autocomplete="off" /><br /><br />
+      <h3 id="result"></h3>
+        </center>
+        <script>
+        function multiplier(ary){
+        var multiplied = 1;
+         for(var s = 0; s < ary.length; s++){
+                multiplied = multiplied*ary[s];
+            }
+            return multiplied;
+        }
+        
+        
+        function setter(number){
+                var k = 0;
+                var arr2 = [];
+                while(number>1){
+                    k+=1;
+                    if(number%k == 0){
+                        arr2.push(k);
+                        number = number/k;
+                        k = 1;
+                    }
+                }
+                return arr2;
+            }
+        function min(a,b){
+            if(a.length<b.length){
+                return a
+            }
+            else{
+            return b
+            }
+        }
+        function max(a,b){
+            if(a.length>b.length){
+                return a
+            }
+            else{
+            return b
+            }
+        }
+        function filter(arg1,arg2){
+        lenone = arg1.length;
+        lentwo = arg2.length;
+            for(var m = 0; m<lenone; m++){
+                for(var l = 0; l<lentwo; l++){
+                if(arg1[m] == arg2[l]){
+                    arg1.splice(m,1);
+                    arg2.splice(l,1);
+                    lenone = arg1.length;
+                    lentwo = arg2.length;
+                    m = 0;
+                    l = -1;
+                    }
+                }
+            }
+            return "<sup>"+multiplier(arg1)+"</sup>"+"&frasl;"+"<sub>"+multiplier(arg2)+"</sub>";
+        }
+        
+        function butify(arg){
+            butified = "";
+        for(var z = 0; z<arg.length; z++){
+        if(z<arg.length-1){
+                butified += arg[z]+"&times;";
+            }
+            else{
+            butified += arg[z];
+            }
+            
+            }
+            return butified;
+        }
+        
+        
+            var inpt = document.getElementById("inpt");
+            var result = document.getElementById("result");
+            var arr = [];
+            function getter(arg1,arg2){
+            var arr = [];
+                for(var i = 0; i < arg1.length; i++){
+                   if(arg1[i] == "/"){
+                       arr.push(i);
+                   }
+                }
+                if(arr.length > 1){
+                    result.innerHTML = "<span style='color:red;'>Invalid Entry</span>"
+                }
+                else{
+                var rslt = arg1.split("/");
+                if(rslt.length !== 2){
+                if(isNaN(rslt[0]) || rslt[0]==0 || rslt[0] < 0){
+                  result.innerHTML = "<span style='color:red;'>Invalid Entry</span>"
+                }
+                else{
+                var showone = butify(setter(rslt[0]));
+                result.innerHTML = "<span style='color:lightgreen;'>"+showone+" = "+multiplier(setter(rslt[0]))+"</span>";
+                }
+                }
+                else{
+                if(isNaN(rslt[0]) || isNaN(rslt[1]) || rslt[0] == "" || rslt[0] == 0 || rslt[1] == 0 || rslt[1]<0 || rslt[0]<0){
+                  result.innerHTML = "<span style='color:red;'>Invalid Entry</span>"
+                }
+                else{
+                result.innerHTML = "<span style='color:lightgreen;'>(<sup>"+butify(setter(rslt[0]))+"</sup>&frasl;<sub>"+butify(setter(rslt[1]))+"</sub>) = "+filter(setter(rslt[0]),setter(rslt[1]))+"</span>"
+                }
+                
+                
+                }
+                }
+            }
+            inpt.addEventListener("input", function(){
+                getter(inpt.value,2);
+            });
+        </script>
+    </body>
+  </html>
